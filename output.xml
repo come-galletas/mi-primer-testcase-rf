@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1.2 (Python 3.10.0 on win32)" generated="20220213 22:46:24.666" rpa="false" schemaversion="2">
+<suite id="s1" name="Test Case" source="D:\VS Robot\test_case.robot">
+<test id="s1-t1" name="Mi primir test">
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>https://demoqa.com/text-box</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20220213 22:46:24.883" level="INFO">Opening browser 'chrome' to base url 'https://demoqa.com/text-box'.</msg>
+<status status="PASS" starttime="20220213 22:46:24.883" endtime="20220213 22:46:31.973"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20220213 22:46:31.973" endtime="20220213 22:46:32.102"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20220213 22:46:34.112" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20220213 22:46:32.103" endtime="20220213 22:46:34.112"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>id=userName</arg>
+<arg>Come Galletas</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20220213 22:46:34.113" level="INFO">Typing text 'Come Galletas' into text field 'id=userName'.</msg>
+<status status="PASS" starttime="20220213 22:46:34.113" endtime="20220213 22:46:34.230"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20220213 22:46:36.243" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20220213 22:46:34.230" endtime="20220213 22:46:36.243"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>id=userEmail</arg>
+<arg>sandy.herrera28@gmail.com</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20220213 22:46:36.246" level="INFO">Typing text 'sandy.herrera28@gmail.com' into text field 'id=userEmail'.</msg>
+<status status="PASS" starttime="20220213 22:46:36.245" endtime="20220213 22:46:36.385"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20220213 22:46:38.390" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20220213 22:46:36.385" endtime="20220213 22:46:38.390"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>id=currentAddress</arg>
+<arg>Calle 64 Pereira</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20220213 22:46:38.391" level="INFO">Typing text 'Calle 64 Pereira' into text field 'id=currentAddress'.</msg>
+<status status="PASS" starttime="20220213 22:46:38.391" endtime="20220213 22:46:38.495"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20220213 22:46:40.503" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20220213 22:46:38.495" endtime="20220213 22:46:40.503"/>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<arg>id=permanentAddress</arg>
+<arg>Calle 64 Pereira</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20220213 22:46:40.507" level="INFO">Typing text 'Calle 64 Pereira' into text field 'id=permanentAddress'.</msg>
+<status status="PASS" starttime="20220213 22:46:40.506" endtime="20220213 22:46:40.605"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>2</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20220213 22:46:42.617" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" starttime="20220213 22:46:40.606" endtime="20220213 22:46:42.617"/>
+</kw>
+<kw name="Execute Javascript" library="SeleniumLibrary">
+<arg>window.scrollTo(0,200)</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<msg timestamp="20220213 22:46:42.617" level="INFO">Executing JavaScript:
+window.scrollTo(0,200)
+Without any arguments.</msg>
+<status status="PASS" starttime="20220213 22:46:42.617" endtime="20220213 22:46:42.625"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20220213 22:46:47.633" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" starttime="20220213 22:46:42.626" endtime="20220213 22:46:47.633"/>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<arg>id=submit</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20220213 22:46:47.635" level="INFO">Clicking button 'id=submit'.</msg>
+<status status="PASS" starttime="20220213 22:46:47.635" endtime="20220213 22:46:47.766"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20220213 22:46:47.766" endtime="20220213 22:46:49.929"/>
+</kw>
+<status status="PASS" starttime="20220213 22:46:24.882" endtime="20220213 22:46:49.931"/>
+</test>
+<status status="PASS" starttime="20220213 22:46:24.667" endtime="20220213 22:46:49.936"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Test Case">Test Case</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
