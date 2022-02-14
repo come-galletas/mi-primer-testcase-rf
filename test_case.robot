@@ -19,7 +19,7 @@ Mi primir test
     input text    id=permanentAddress   Calle 64 Pereira
     Sleep    2
     execute javascript    window.scrollTo(0,200)
-    Sleep    5
+    Sleep    2
     click button  id=submit
     Close Browser
 
