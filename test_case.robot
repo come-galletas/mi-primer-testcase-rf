@@ -9,7 +9,7 @@ Mi primir test
     Open Browser    https://demoqa.com/text-box     chrome
     Maximize Browser Window
     Sleep    2
-    input text    id=userName           Come Galletas
+    input text    id=userName           Come_Galletas
     Sleep    2
     input text    id=userEmail          sandy.herrera28@gmail.com
     Sleep    2
