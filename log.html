@@ -5,7 +5,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="Robot Framework 4.1.2 (Python 3.10.0 on win32)" name="Generator">
+<meta content="Robot Framework 5.0 (Python 3.10.4 on win32)" name="Generator">
 <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAqAAAAAAAAAAAAAAAAAAAALIAAAD/AAAA4AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA4AAAAP8AAACxAAAAAAAAAKYAAAD/AAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAA/wAAAKkAAAD6AAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD/AAAA+gAAAMMAAAAAAAAAAgAAAGsAAABrAAAAawAAAGsAAABrAAAAawAAAGsAAABrAAAADAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAIsAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAFAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAADwAAAB8AAAAAAAAAGAAAABcAAAAAAAAAH8AAABKAAAAAAAAAAAAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAADCAAAA/wAAACkAAADqAAAA4QAAAAAAAAD7AAAA/wAAALAAAAAGAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAIwAAAP4AAAD/AAAA/wAAAGAAAAAAAAAAAAAAAMkAAAD/AAAAigAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAAAAAAAIAAAAcAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAA2gAAAP8AAAD7AAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAD/AAAAqwAAAP8AAACvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALIAAAD/AAAAsgAAAAAAAAC5AAAA/wAAAMoAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMkAAAD/AAAAvAAAAAAAAAAAAAAAAAAAAKwAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArQAAAAAAAAAAwAMAAIABAAAf+AAAP/wAAD/8AAAgBAAAP/wAAD/8AAA//AAAJIwAADHEAAA//AAAP/wAAB/4AACAAQAAwAMAAA==">
 <style media="all" type="text/css">
 /* Generic and misc styles */
@@ -318,6 +318,9 @@ th.stats-col-graph:hover {
     top: 0;
     padding: 3px;
     cursor: default;
+}
+.element-header .label {
+    margin-right: 0.5em;
 }
 .name {
     font-weight: bold;
@@ -966,6 +969,7 @@ window.model = (function () {
     }
     function Keyword(data) {
         var kw = createModelObject(data);
+        var flatTypes = ['RETURN', 'BREAK', 'CONTINUE'];
         kw.libname = data.libname;
         kw.fullName = (kw.libname ? kw.libname + '.' : '') + kw.name;
         kw.type = data.type;
@@ -1350,8 +1354,8 @@ window.testdata = function () {
     var _statistics = null;
     var LEVELS = ['TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FAIL', 'SKIP'];
     var STATUSES = ['FAIL', 'PASS', 'SKIP', 'NOT RUN'];
-    var KEYWORD_TYPES = ['KEYWORD', 'SETUP', 'TEARDOWN', 'FOR', 'VAR', 'IF', 'ELSE IF', 'ELSE'];
-    var MESSAGE_TYPE = 8;
+    var KEYWORD_TYPES = ['KEYWORD', 'SETUP', 'TEARDOWN', 'FOR', 'ITERATION', 'IF', 'ELSE IF', 'ELSE', 'RETURN',
+                         'TRY', 'EXCEPT', 'FINALLY', 'WHILE', 'CONTINUE', 'BREAK'];
     function addElement(elem) {
         if (!elem.id)
             elem.id = uniqueId();
@@ -1372,10 +1376,10 @@ window.testdata = function () {
                 elapsed];
     }
     function createMessage(element, strings) {
-        return model.Message(LEVELS[element[2]],
-                             util.timestamp(element[1]),
-                             strings.get(element[3]),
-                             strings.get(element[4]));
+        return model.Message(LEVELS[element[1]],
+                             util.timestamp(element[0]),
+                             strings.get(element[2]),
+                             strings.get(element[3]));
     }
     function parseStatus(stats) {
         return STATUSES[stats[0]];
@@ -1386,7 +1390,7 @@ window.testdata = function () {
         };
     }
     function createBodyItem(parent, element, strings, index) {
-        if (element[0] == MESSAGE_TYPE)
+        if (element.length < 5)
             return createMessage(element, strings);
         var messages = util.filter(parent.children(), function (child) {
             return child.type == 'message';
@@ -1799,25 +1803,25 @@ function stopPropagation(event) {
 window.output = {};
 </script>
 <script type="text/javascript">
-window.output["suite"] = [1,2,3,0,[],[1,0,25269],[],[[4,0,0,[],[1,215,25049],[[0,5,6,0,7,8,0,0,[1,216,7090],[[8,216,2,9]]],[0,10,6,0,11,0,0,0,[1,7306,129],[]],[0,12,13,0,14,15,0,0,[1,7436,2009],[[8,9445,2,16]]],[0,17,6,0,18,19,0,0,[1,9446,117],[[8,9446,2,20]]],[0,12,13,0,14,15,0,0,[1,9563,2013],[[8,11576,2,16]]],[0,17,6,0,18,21,0,0,[1,11578,140],[[8,11579,2,22]]],[0,12,13,0,14,15,0,0,[1,11718,2005],[[8,13723,2,16]]],[0,17,6,0,18,23,0,0,[1,13724,104],[[8,13724,2,24]]],[0,12,13,0,14,15,0,0,[1,13828,2008],[[8,15836,2,16]]],[0,17,6,0,18,25,0,0,[1,15839,99],[[8,15840,2,26]]],[0,12,13,0,14,15,0,0,[1,15939,2011],[[8,17950,2,16]]],[0,27,6,0,28,29,0,0,[1,17950,8],[[8,17950,2,30]]],[0,12,13,0,14,31,0,0,[1,17959,5007],[[8,22966,2,32]]],[0,33,6,0,34,35,0,0,[1,22968,131],[[8,22968,2,36]]],[0,37,6,0,38,0,0,0,[1,23099,2163],[]]]]],[],[1,1,0,0]];
+window.output["suite"] = [1,2,3,0,[],[1,0,21713],[],[[4,0,0,[],[1,174,21535],[[0,5,6,0,7,8,0,0,[1,174,6789],[[175,2,9]]],[0,10,6,0,11,0,0,0,[1,6964,115],[]],[0,12,13,0,14,15,0,0,[1,7080,2005],[[9085,2,16]]],[0,17,6,0,18,19,0,0,[1,9085,84],[[9086,2,20]]],[0,12,13,0,14,15,0,0,[1,9170,2002],[[11172,2,16]]],[0,17,6,0,18,21,0,0,[1,11172,83],[[11173,2,22]]],[0,12,13,0,14,15,0,0,[1,11255,2016],[[13271,2,16]]],[0,17,6,0,18,23,0,0,[1,13273,127],[[13274,2,24]]],[0,12,13,0,14,15,0,0,[1,13400,2011],[[15411,2,16]]],[0,17,6,0,18,25,0,0,[1,15414,78],[[15414,2,26]]],[0,12,13,0,14,15,0,0,[1,15492,2008],[[17500,2,16]]],[0,27,6,0,28,29,0,0,[1,17503,23],[[17504,2,30]]],[0,12,13,0,14,15,0,0,[1,17527,2009],[[19536,2,16]]],[0,31,6,0,32,33,0,0,[1,19538,63],[[19539,2,34]]],[0,35,6,0,36,0,0,0,[1,19602,2105],[]]]]],[],[1,1,0,0]];
 </script>
 <script type="text/javascript">
 window.output["strings"] = [];
 </script>
 <script type="text/javascript">
-window.output["strings"] = window.output["strings"].concat(["*","*Test Case","*D:\\VS Robot\\test_case.robot","*test_case.robot","*Mi primir test","*Open Browser","*SeleniumLibrary","*<p>Opens a new browser instance to the optional <code>url\x3c/code>.\x3c/p>","*<a href=\"https://demoqa.com/text-box\">https://demoqa.com/text-box\x3c/a>, chrome","*Opening browser 'chrome' to base url '<a href=\"https://demoqa.com/text-box\">https://demoqa.com/text-box\x3c/a>'.","*Maximize Browser Window","*<p>Maximizes current browser window.\x3c/p>","*Sleep","*BuiltIn","*<p>Pauses the test executed for the given time.\x3c/p>","*2","*Slept 2 seconds","*Input Text","*<p>Types the given <code>text\x3c/code> into the text field identified by <code>locator\x3c/code>.\x3c/p>","*id=userName, Come Galletas","*Typing text 'Come Galletas' into text field 'id=userName'.","*id=userEmail, sandy.herrera28@gmail.com","*Typing text 'sandy.herrera28@gmail.com' into text field 'id=userEmail'.","*id=currentAddress, Calle 64 Pereira","*Typing text 'Calle 64 Pereira' into text field 'id=currentAddress'.","*id=permanentAddress, Calle 64 Pereira","*Typing text 'Calle 64 Pereira' into text field 'id=permanentAddress'.","*Execute Javascript","*<p>Executes the given JavaScript code with possible arguments.\x3c/p>","*window.scrollTo(0,200)","*Executing JavaScript:\nwindow.scrollTo(0,200)\nWithout any arguments.","*5","*Slept 5 seconds","*Click Button","*<p>Clicks the button identified by <code>locator\x3c/code>.\x3c/p>","*id=submit","*Clicking button 'id=submit'.","*Close Browser","*<p>Closes the current browser.\x3c/p>"]);
+window.output["strings"] = window.output["strings"].concat(["*","*Test Case","*G:\\Estudio\\Automatizacion QA\\mi-primer-testcase-rf\\test_case.robot","*test_case.robot","*Mi primir test","*Open Browser","*SeleniumLibrary","*<p>Opens a new browser instance to the optional <code>url\x3c/code>.\x3c/p>","*<a href=\"https://demoqa.com/text-box\">https://demoqa.com/text-box\x3c/a>, chrome","*Opening browser 'chrome' to base url '<a href=\"https://demoqa.com/text-box\">https://demoqa.com/text-box\x3c/a>'.","*Maximize Browser Window","*<p>Maximizes current browser window.\x3c/p>","*Sleep","*BuiltIn","*<p>Pauses the test executed for the given time.\x3c/p>","*2","*Slept 2 seconds","*Input Text","*<p>Types the given <code>text\x3c/code> into the text field identified by <code>locator\x3c/code>.\x3c/p>","*id=userName, Come Galletas","*Typing text 'Come Galletas' into text field 'id=userName'.","*id=userEmail, sandy.herrera28@gmail.com","*Typing text 'sandy.herrera28@gmail.com' into text field 'id=userEmail'.","*id=currentAddress, Calle 64 Pereira","*Typing text 'Calle 64 Pereira' into text field 'id=currentAddress'.","*id=permanentAddress, Calle 64 Pereira","*Typing text 'Calle 64 Pereira' into text field 'id=permanentAddress'.","*Execute Javascript","*<p>Executes the given JavaScript code with possible arguments.\x3c/p>","*window.scrollTo(0,200)","*Executing JavaScript:\nwindow.scrollTo(0,200)\nWithout any arguments.","*Click Button","*<p>Clicks the button identified by <code>locator\x3c/code>.\x3c/p>","*id=submit","*Clicking button 'id=submit'.","*Close Browser","*<p>Closes the current browser.\x3c/p>"]);
 </script>
 <script type="text/javascript">
-window.output["stats"] = [[{"elapsed":"00:00:25","fail":0,"label":"All Tests","pass":1,"skip":0}],[],[{"elapsed":"00:00:25","fail":0,"id":"s1","label":"Test Case","name":"Test Case","pass":1,"skip":0}]];
+window.output["stats"] = [[{"elapsed":"00:00:22","fail":0,"label":"All Tests","pass":1,"skip":0}],[],[{"elapsed":"00:00:22","fail":0,"id":"s1","label":"Test Case","name":"Test Case","pass":1,"skip":0}]];
 </script>
 <script type="text/javascript">
 window.output["errors"] = [];
 </script>
 <script type="text/javascript">
-window.output["baseMillis"] = 1644810384667;
+window.output["baseMillis"] = 1650341292127;
 </script>
 <script type="text/javascript">
-window.output["generated"] = 25302;
+window.output["generated"] = 21722;
 </script>
 <script type="text/javascript">
 window.output["expand_keywords"] = null;
@@ -2123,7 +2127,7 @@ function addExecutionLog(main) {
     <div class="element-header closed" onclick="toggleKeyword('${id}')">
       <div class="element-header-left" title="${type}  {{if name}}{{html fullName}}  {{/if}}[${status}]">
         <span class="elapsed" title="Elapsed time">${times.elapsedTime}</span>
-        <span class="label keyword ${status.toLowerCase()}">${type}</span>
+        <span class="label ${status.toLowerCase()}">${type}</span>
         <span>{{html assign}}</span>
         <span class="name"><span class="parent-name">{{html libname}}{{if libname}} . {{/if}}</span>{{html name}}</span>
         <span class="arg">{{html arguments}}</span>
@@ -2131,7 +2135,7 @@ function addExecutionLog(main) {
       <div class="element-header-right" onclick="stopPropagation(event)">
         <a class="expand" title="Expand all" href="javascript:expandAll('${id}')"></a>
         <a class="collapse" title="Collapse all" href="javascript:collapseAll('${id}')"></a>
-        <a class="link" title="Link to this keyword" href="#${id}" onclick="makeElementVisible('${id}')"></a>
+        <a class="link" title="Link to this item" href="#${id}" onclick="makeElementVisible('${id}')"></a>
       </div>
       <div class="element-header-toggle" title="Toggle visibility"></div>
     </div>
